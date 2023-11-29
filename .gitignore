@@ -1,0 +1,7 @@
+.vscode
+
+input/*
+!input/example.md
+
+output/*
+!output/example.pdf

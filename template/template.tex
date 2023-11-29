@@ -1,0 +1,136 @@
+\documentclass[a4paper]{article}
+
+%----------------------------------------------------------------------------------------
+%	RESET
+%----------------------------------------------------------------------------------------
+% reset paragraph indentation
+\setlength{\parindent}{0mm}
+
+% reset tables
+\setlength{\tabcolsep}{0in}
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT DEFINITIONS
+%----------------------------------------------------------------------------------------
+%define page styles using geometry
+\usepackage[a4paper]{geometry}		
+
+% set page margins
+\geometry{top=1cm, bottom=-.6cm, left=1.5cm, right=1.5cm} 	
+
+%----------------------------------------------------------------------------------------
+%	SPACING
+%---------------------------------------------------------------------------------------- 
+\newcommand{\spaceL} {\vspace{12pt}}
+\newcommand{\spaceM} {\vspace{8pt}}
+\newcommand{\spaceS} {\vspace{4pt}}
+
+%----------------------------------------------------------------------------------------
+%	BORDERS
+%---------------------------------------------------------------------------------------- 
+\newcommand{\borderBase}[1]{\textcolor{black}{#1}}
+\newcommand{\border}{\borderBase{\hrule}}
+\newcommand{\borderFill}{\borderBase{\leaders\hrule height3pt depth-2.6pt\hfill}}
+
+%----------------------------------------------------------------------------------------
+%	TYPOGRAPHY
+%---------------------------------------------------------------------------------------- 
+
+% Use for Tag boxes
+\usepackage{tikz}
+
+% Header
+\newcommand{\headerTitle}[1] {\Large\textbf{#1}}
+\newcommand{\headerSubtitle}[1] {\small{#1}}
+\newcommand{\headerContatct}[1] {\small{#1}}
+\newcommand{\headerCatchPhrase}[1] {\small\textbf{#1}}
+
+% Section
+\newcommand{\sectionTitle}[1]
+{
+  \vspace{-4pt}
+  \begin{center}
+    \borderFill {\large{ #1 }}\borderFill \\
+  \end{center}
+  \vspace{-4pt}
+}
+  
+% Content
+\newcommand{\contentTitle}[1] {\small\textbf{#1}}
+\newcommand{\contentSubTitle}[1] {\textit{\small{#1}}}
+\newcommand{\contentLocation}[1] {\textit{\small{#1}}}
+\newcommand{\contentDate}[1] {\small{#1}}
+\newcommand{\contentItem}[1] {\item\small{{#1 \vspace{-2pt}}}}
+\newcommand{\content}[1] {\small{#1}}
+
+% Tag
+\newcommand\tag[2][fill=black!5]{%
+  \tikz[baseline]\node[%
+    inner ysep=1pt,
+    inner xsep=4pt, 
+    anchor=text, 
+    rectangle, 
+    rounded corners=1mm,
+    #1] {\strut\footnotesize{#2}};%
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+%	HEADER ---------------------------
+\headerTitle{$name$} \hfill \headerContatct{$email$} \\
+\headerSubtitle{$profession$} \hfill \headerContatct{$phone$} \\
+
+%	SUMMARY ---------------------------
+\headerCatchPhrase{$summary$}
+\vspace{8pt}
+
+%	EXPERIENCE ---------------------------
+\sectionTitle{$work-title$}
+
+$for(work)$
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \contentTitle{$work.company$}  & \contentDate{$work.dates$}\\
+    \contentSubTitle{$work.title$} & \contentLocation{$work.location$}\\
+  \end{tabular*}
+
+  \vspace{8pt}
+  \content{$work.description$} \\
+  
+  \vspace{-14pt}
+  \begin{itemize}
+    $for(work.duties)$
+      \contentItem{$work.duties$}
+    $endfor$
+  \end{itemize}
+
+  \vspace{4pt}
+  $for(work.skills)$
+    \tag{$work.skills$}
+  $endfor$
+
+  \spaceL
+$endfor$
+
+%	EDUCATION ---------------------------
+\sectionTitle{$education-title$}
+
+$for(education)$
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \contentTitle{$education.school$} & \contentDate{$education.year$}\\
+    \contentSubTitle{$education.degree$} & \contentLocation{$education.location$}\\
+  \end{tabular*}
+
+  \spaceS
+$endfor$
+
+%	PROJECTS ---------------------------
+\sectionTitle{$projects-title$}
+
+$for(projects)$
+  \contentTitle{$projects.name$} - \content{$projects.description$}\\
+$endfor$
+  
+\end{document}
