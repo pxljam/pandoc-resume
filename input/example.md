@@ -85,4 +85,10 @@ projects:
     description: This is a personal project.
   - name: A personal project
     description: This is a personal project.
+languages-title: Languages
+languages:
+  - name: English
+    description: Experimented
+  - name: Spanish
+    description: Intermediate
 ---

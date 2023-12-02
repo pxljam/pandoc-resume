@@ -239,6 +239,20 @@
   $endfor$
 \fi
 
+%	LANGUAGES ---------------------------
+\ifNotEmpty{$languages$}
+  \spaceXL
+  \sectionTitle{$languages-title$} \\
+
+  \spaceM
+  $for(languages)$
+    \begin{absolutelynopagebreak}
+      \contentTitle{$languages.name$} - \content{$languages.description$} \\
+    \end{absolutelynopagebreak}
+    $sep$\spaceS
+  $endfor$
+\fi
+
 %	PROJECTS ---------------------------
 \ifNotEmpty{$projects$}
   \spaceXL
@@ -247,7 +261,7 @@
   \spaceM
   $for(projects)$
     \begin{absolutelynopagebreak}
-      \contentTitle{$projects.name$} - \content{$projects.description$}\\
+      \contentTitle{$projects.name$} - \content{$projects.description$} \\
     \end{absolutelynopagebreak}
     $sep$\spaceS
   $endfor$
