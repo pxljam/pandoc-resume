@@ -1,136 +1,261 @@
-\documentclass[a4paper]{article}
-
-%----------------------------------------------------------------------------------------
-%	RESET
-%----------------------------------------------------------------------------------------
-% reset paragraph indentation
-\setlength{\parindent}{0mm}
-
-% reset tables
-\setlength{\tabcolsep}{0in}
+\documentclass[11pt,a4paper]{article}
 
 %----------------------------------------------------------------------------------------
 %	PAGE LAYOUT DEFINITIONS
 %----------------------------------------------------------------------------------------
+% 2 columns header
+\usepackage{multicol}
+
 %define page styles using geometry
 \usepackage[a4paper]{geometry}		
+% \usepackage[a4paper,showframe,verbose]{geometry}		
 
 % set page margins
-\geometry{top=1cm, bottom=-.6cm, left=1.5cm, right=1.5cm} 	
+\geometry{top=2cm, bottom=1cm, left=2cm, right=2cm} 
+
+%----------------------------------------------------------------------------------------
+% COLORS 	
+%---------------------------------------------------------------------------------------- 
+\usepackage{xcolor}
+
+%accent color
+\definecolor{accentColor}{HTML}{4f46e5}
+\definecolor{accentColorBackground}{HTML}{eef2ff}
+
+%primary color
+\definecolor{primaryColor}{HTML}{000000}
+
+%secondary color
+\definecolor{secondaryColor}{HTML}{6b7280}
+
+%border color
+\definecolor{borderColor}{HTML}{e5e7eb}
 
 %----------------------------------------------------------------------------------------
 %	SPACING
 %---------------------------------------------------------------------------------------- 
-\newcommand{\spaceL} {\vspace{12pt}}
+\newcommand{\spaceXL} {\vspace{20pt}}
+\newcommand{\spaceL} {\vspace{16pt}}
 \newcommand{\spaceM} {\vspace{8pt}}
 \newcommand{\spaceS} {\vspace{4pt}}
 
 %----------------------------------------------------------------------------------------
 %	BORDERS
 %---------------------------------------------------------------------------------------- 
-\newcommand{\borderBase}[1]{\textcolor{black}{#1}}
+\newcommand{\borderBase}[1]{\textcolor{borderColor}{#1}}
 \newcommand{\border}{\borderBase{\hrule}}
 \newcommand{\borderFill}{\borderBase{\leaders\hrule height3pt depth-2.6pt\hfill}}
 
 %----------------------------------------------------------------------------------------
 %	TYPOGRAPHY
 %---------------------------------------------------------------------------------------- 
+\usepackage[hidelinks]{hyperref}
 
-% Use for Tag boxes
-\usepackage{tikz}
+% set default font family to sans-serif
+\renewcommand{\familydefault}{\sfdefault}
+
+% reset paragraph indentation
+\setlength{\parindent}{0mm}
 
 % Header
 \newcommand{\headerTitle}[1] {\Large\textbf{#1}}
-\newcommand{\headerSubtitle}[1] {\small{#1}}
-\newcommand{\headerContatct}[1] {\small{#1}}
-\newcommand{\headerCatchPhrase}[1] {\small\textbf{#1}}
+\newcommand{\headerSubtitle}[1] {\Large\textcolor{accentColor}{#1}}
+\newcommand{\headerContatct}[1] {\footnotesize{#1}}
+
+% summary
+\newcommand{\summary}[1] {\normalsize{#1}}
 
 % Section
 \newcommand{\sectionTitle}[1]
 {
-  \vspace{-4pt}
   \begin{center}
-    \borderFill {\large{ #1 }}\borderFill \\
+    \borderFill {\scriptsize{ \textcolor{secondaryColor}{\uppercase{#1}} }}\borderFill \\
   \end{center}
-  \vspace{-4pt}
 }
   
 % Content
-\newcommand{\contentTitle}[1] {\small\textbf{#1}}
-\newcommand{\contentSubTitle}[1] {\textit{\small{#1}}}
-\newcommand{\contentLocation}[1] {\textit{\small{#1}}}
-\newcommand{\contentDate}[1] {\small{#1}}
-\newcommand{\contentItem}[1] {\item\small{{#1 \vspace{-2pt}}}}
-\newcommand{\content}[1] {\small{#1}}
+\newcommand{\contentTitle}[1] {\MakeUppercase\normalsize\textbf{#1}}
+\newcommand{\contentPostTitle}[1] {\normalsize\textit{#1}}
+\newcommand{\contentSubTitle}[1] {\normalsize\textcolor{secondaryColor}{#1}}
+% \newcommand{\contentItem}[1] {\item\normalsize{{#1 \vspace{-2pt}}}}
+\newcommand{\contentItem}[1] {\item\normalsize{{#1}}}
+\newcommand{\content}[1] {\normalsize{#1}}
+
+% footer
+\newcommand{\footerStyle}[1] {\tiny\textcolor{secondaryColor}{\uppercase{#1}}}
+
+%----------------------------------------------------------------------------------------
+%	LIST
+%---------------------------------------------------------------------------------------- 
+% \usepackage{enumitem}
+% set list style
+\renewcommand\labelitemi{\textendash}
+
+% set spacing
+\newenvironment{myitemize}
+{
+  \vspace{-\topsep}
+  \begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    % \setlength{\topsep}{-\topsep}
+    % \setlength{\partopsep}{0pt}
+    % \setlength{\parsep}{0pt}
+    % \setlength{\baselineskip}{0pt}
+}
+{ \end{itemize}
+\vspace{-\topsep}                  } 
+
+%----------------------------------------------------------------------------------------
+%	FOOTER
+%---------------------------------------------------------------------------------------- 
+\usepackage{fancyhdr}
+
+% \pagestyle{fancy}
+\pagestyle{empty}
+% reset
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+% set footer
+% \fancyhead[L]{\footerStyle{$name$ - $title$}}
+\fancyfoot[L]{\footerStyle{$name$ - $title$}}
+\fancyfoot[R]{\footerStyle{\thepage}}
+
+%----------------------------------------------------------------------------------------
+%	TAG
+%---------------------------------------------------------------------------------------- 
+\usepackage{tikz}
 
 % Tag
-\newcommand\tag[2][fill=black!5]{%
+\newcommand\tag[2][fill=accentColorBackground, text=accentColor, draw=accentColor!20]{%
   \tikz[baseline]\node[%
     inner ysep=1pt,
     inner xsep=4pt, 
     anchor=text, 
     rectangle, 
     rounded corners=1mm,
-    #1] {\strut\footnotesize{#2}};%
+    #1] {\strut\scriptsize{#2}};%
 }
+
+%----------------------------------------------------------------------------------------
+%	UNBREAKABLE UNIT
+%----------------------------------------------------------------------------------------
+% prevent break page inside this unit's content.
+% https://tex.stackexchange.com/questions/94699/absolutely-definitely-preventing-page-break
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+%----------------------------------------------------------------------------------------
+%	CONDITIONAL MACRO
+%----------------------------------------------------------------------------------------
+\def \ifNotEmpty#1{\def\temp{#1} \ifx\temp\empty \else}
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT
 %----------------------------------------------------------------------------------------
 \begin{document}
+\color{primaryColor}
+
+% remove footer on first page
+% \thispagestyle{empty}
 
 %	HEADER ---------------------------
-\headerTitle{$name$} \hfill \headerContatct{$email$} \\
-\headerSubtitle{$profession$} \hfill \headerContatct{$phone$} \\
+\begin{multicols}{2}
+  \headerTitle{$name$} \\ 
+  \headerSubtitle{$title$} \\
+  \vfill
+  \columnbreak
+
+  % right side
+  {\raggedleft 
+    \ifNotEmpty{$address$}
+      \headerContatct{$address$} \\
+    \fi
+    \ifNotEmpty{$email$}
+      \href{mailto:$email$}{\headerContatct{$email$}} \\
+    \fi
+    \ifNotEmpty{$email$}
+      \headerContatct{$phone$} \\
+    \fi
+    \ifNotEmpty{$github$}
+      \href{https://github.com/$github$}{\headerContatct{github.com/$github$}} \\
+    \fi
+    \ifNotEmpty{$linkedin$}
+      \href{https://linkedin.com/in/$linkedin$}{\headerContatct{linkedin.com/in/$linkedin$}} \\
+    \fi
+  }
+\end{multicols}
+\vspace{-16pt}
 
 %	SUMMARY ---------------------------
-\headerCatchPhrase{$summary$}
-\vspace{8pt}
+\sectionTitle{$summary-title$}
+\begin{flushleft}
+\summary{$summary$}
+\end{flushleft}
 
 %	EXPERIENCE ---------------------------
-\sectionTitle{$work-title$}
+\ifNotEmpty{$education$}
+  \sectionTitle{$work-title$}
 
-$for(work)$
-  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-    \contentTitle{$work.company$}  & \contentDate{$work.dates$}\\
-    \contentSubTitle{$work.title$} & \contentLocation{$work.location$}\\
-  \end{tabular*}
+  $for(work)$
+    \begin{absolutelynopagebreak}
+      \contentTitle{$work.title$} - \contentPostTitle{$work.company$}\\
+      \contentSubTitle{$work.dates$, $work.location$}\\
 
-  \vspace{8pt}
-  \content{$work.description$} \\
-  
-  \vspace{-14pt}
-  \begin{itemize}
-    $for(work.duties)$
-      \contentItem{$work.duties$}
-    $endfor$
-  \end{itemize}
+      \vspace{-8pt}
+      \ifNotEmpty{$work.description$}
+        {\raggedright 
+          \content{$work.description$} \\
+        }
+      \fi
+      \ifNotEmpty{$work.duties$}
+        \begin{myitemize}
+          $for(work.duties)$
+            \contentItem{$work.duties$}
+          $endfor$
+        \end{myitemize}
+      \fi
 
-  \vspace{4pt}
-  $for(work.skills)$
-    \tag{$work.skills$}
+      \ifNotEmpty{$work.skills$}
+        \vspace{6pt}
+        $for(work.skills)$
+          \tag{$work.skills$}
+        $endfor$
+      \fi
+
+      \spaceXL
+    \end{absolutelynopagebreak}
   $endfor$
-
-  \spaceL
-$endfor$
+\fi
 
 %	EDUCATION ---------------------------
-\sectionTitle{$education-title$}
+\ifNotEmpty{$education$}
+  \sectionTitle{$education-title$}
 
-$for(education)$
-  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-    \contentTitle{$education.school$} & \contentDate{$education.year$}\\
-    \contentSubTitle{$education.degree$} & \contentLocation{$education.location$}\\
-  \end{tabular*}
+  $for(education)$
+    \begin{absolutelynopagebreak}
+      \contentTitle{$education.degree$} \\
+      \contentSubTitle{$education.year$, $education.school$, $education.location$}
 
-  \spaceS
-$endfor$
+      \spaceM
+    \end{absolutelynopagebreak}
+  $endfor$
+\fi
 
 %	PROJECTS ---------------------------
-\sectionTitle{$projects-title$}
+\ifNotEmpty{$projects$}
+  \sectionTitle{$projects-title$}
 
-$for(projects)$
-  \contentTitle{$projects.name$} - \content{$projects.description$}\\
-$endfor$
-  
+  $for(projects)$
+    \begin{absolutelynopagebreak}
+      \contentTitle{$projects.name$} - \content{$projects.description$}\\
+
+      \vspace{-8pt}
+    \end{absolutelynopagebreak}
+  $endfor$
+\fi
+
 \end{document}
