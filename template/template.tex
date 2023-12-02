@@ -34,8 +34,8 @@
 %----------------------------------------------------------------------------------------
 %	SPACING
 %---------------------------------------------------------------------------------------- 
-\newcommand{\spaceXL} {\vspace{20pt}}
-\newcommand{\spaceL} {\vspace{16pt}}
+\newcommand{\spaceXL} {\vspace{16pt}}
+\newcommand{\spaceL} {\vspace{12pt}}
 \newcommand{\spaceM} {\vspace{8pt}}
 \newcommand{\spaceS} {\vspace{4pt}}
 
@@ -74,6 +74,9 @@
 \newcommand{\contentSubTitle}[1] {\normalsize\textcolor{secondaryColor}{#1}}
 \newcommand{\contentItem}[1] {\item\normalsize{{#1}}}
 \newcommand{\content}[1] {\normalsize{#1}}
+
+% project
+\newcommand{\projectLink}[2] {\href{#1}{\contentPostTitle{#2}}}
 
 % footer
 \newcommand{\footerStyle}[1] {\tiny\textcolor{secondaryColor}{\uppercase{#1}}}
@@ -136,7 +139,7 @@
 %----------------------------------------------------------------------------------------
 % prevent break page inside this unit's content.
 % https://tex.stackexchange.com/questions/94699/absolutely-definitely-preventing-page-break
-\newenvironment{absolutelynopagebreak}
+\newenvironment{noPageBreak}
   {\par\nobreak\vfil\penalty0\vfilneg
    \vtop\bgroup}
   {\par\xdef\tpd{\the\prevdepth}\egroup
@@ -197,7 +200,7 @@
 
   \spaceM
   $for(work)$
-    \begin{absolutelynopagebreak}
+    \begin{noPageBreak}
       \contentTitle{$work.title$} - \contentPostTitle{$work.company$}\\
       \contentSubTitle{$work.dates$, $work.location$}\\
       \ifNotEmpty{$work.description$}
@@ -217,9 +220,10 @@
         $for(work.skills)$
           \tag{$work.skills$}
         $endfor$
+        \spaceS
       \fi
 
-    \end{absolutelynopagebreak}
+    \end{noPageBreak}
     $sep$\spaceL
   $endfor$
 \fi
@@ -231,10 +235,10 @@
 
   \spaceM
   $for(education)$
-    \begin{absolutelynopagebreak}
+    \begin{noPageBreak}
       \contentTitle{$education.degree$} \\
       \contentSubTitle{$education.year$, $education.school$, $education.location$} \\
-    \end{absolutelynopagebreak}
+    \end{noPageBreak}
     $sep$\spaceS
   $endfor$
 \fi
@@ -246,9 +250,9 @@
 
   \spaceM
   $for(certificates)$
-    \begin{absolutelynopagebreak}
+    \begin{noPageBreak}
       \contentTitle{$certificates$} \\
-    \end{absolutelynopagebreak}
+    \end{noPageBreak}
     $sep$\spaceS
   $endfor$
 \fi
@@ -260,9 +264,9 @@
 
   \spaceM
   $for(languages)$
-    \begin{absolutelynopagebreak}
+    \begin{noPageBreak}
       \contentTitle{$languages.name$} - \content{$languages.description$} \\
-    \end{absolutelynopagebreak}
+    \end{noPageBreak}
     $sep$\spaceS
   $endfor$
 \fi
@@ -274,10 +278,22 @@
 
   \spaceM
   $for(projects)$
-    \begin{absolutelynopagebreak}
-      \contentTitle{$projects.name$} - \content{$projects.description$} \\
-    \end{absolutelynopagebreak}
-    $sep$\spaceS
+    \begin{noPageBreak}
+      \contentTitle{$projects.name$}\ifNotEmpty{$projects.link$}- \projectLink{$projects.link$}{$projects.link-name$}\fi \\
+      \ifNotEmpty{$projects.description$}
+        \spaceS
+        \content{$projects.description$} \\
+      \fi
+
+      \ifNotEmpty{$projects.skills$}
+        \spaceS
+        $for(projects.skills)$
+          \tag{$projects.skills$}
+        $endfor$
+        \spaceS
+      \fi
+    \end{noPageBreak}
+    $sep$\spaceL
   $endfor$
 \fi
 

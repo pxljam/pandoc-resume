@@ -1,6 +1,6 @@
 ---
-name: Firstname LastName
-title: software engineer
+name: Firstname Lastname
+title: Software Engineer
 summary-title: summary
 summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis egestas pretium aenean pharetra. Orci eu lobortis elementum nibh tellus molestie. Vulputate dignissim suspendisse in est. Vel pharetra vel turpis nunc. Malesuada nunc vel risus commodo.
 email: address@mail.com
@@ -86,9 +86,18 @@ work:
 projects-title: Personal Projects
 projects:
   - name: A personal project
-    description: This is a personal project.
-  - name: A personal project
-    description: This is a personal project.
+    link: https://www.google.com
+    link-name: my-project.com
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis egestas pretium aenean pharetra.
+    skills:
+      - skill
+      - skill
+      - skill
+  - name: Another personal project
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+  - name: A project whitout a description
+    link: https://www.google.com
+    link-name: my-project.com
 languages-title: Languages
 languages:
   - name: English
