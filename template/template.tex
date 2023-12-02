@@ -239,6 +239,20 @@
   $endfor$
 \fi
 
+%	CERTIFICATES ---------------------------
+\ifNotEmpty{$certificates$}
+  \spaceXL
+  \sectionTitle{$certificates-title$} \\
+
+  \spaceM
+  $for(certificates)$
+    \begin{absolutelynopagebreak}
+      \contentTitle{$certificates$} \\
+    \end{absolutelynopagebreak}
+    $sep$\spaceS
+  $endfor$
+\fi
+
 %	LANGUAGES ---------------------------
 \ifNotEmpty{$languages$}
   \spaceXL

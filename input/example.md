@@ -19,6 +19,10 @@ education:
     degree: Master's
     location: Location
 work-title: professional experience
+certificates-title: Certificates
+certificates:
+  - Professional certificate, institute, 2022
+  - Another professional certificate, institute, 2020
 work:
   - company: Company
     title: Software Engineer
