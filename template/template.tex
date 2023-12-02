@@ -66,18 +66,12 @@
 \newcommand{\summary}[1] {\normalsize{#1}}
 
 % Section
-\newcommand{\sectionTitle}[1]
-{
-  \begin{center}
-    \borderFill {\scriptsize{ \textcolor{secondaryColor}{\uppercase{#1}} }}\borderFill \\
-  \end{center}
-}
+\newcommand{\sectionTitle}[1]{\textcolor{secondaryColor}{\uppercase{\small{#1}}}}
   
 % Content
 \newcommand{\contentTitle}[1] {\MakeUppercase\normalsize\textbf{#1}}
 \newcommand{\contentPostTitle}[1] {\normalsize\textit{#1}}
 \newcommand{\contentSubTitle}[1] {\normalsize\textcolor{secondaryColor}{#1}}
-% \newcommand{\contentItem}[1] {\item\normalsize{{#1 \vspace{-2pt}}}}
 \newcommand{\contentItem}[1] {\item\normalsize{{#1}}}
 \newcommand{\content}[1] {\normalsize{#1}}
 
@@ -158,6 +152,7 @@
 %----------------------------------------------------------------------------------------
 \begin{document}
 \color{primaryColor}
+\raggedright
 
 % remove footer on first page
 % \thispagestyle{empty}
@@ -188,28 +183,26 @@
     \fi
   }
 \end{multicols}
-\vspace{-16pt}
 
 %	SUMMARY ---------------------------
-\sectionTitle{$summary-title$}
-\begin{flushleft}
-\summary{$summary$}
-\end{flushleft}
+\sectionTitle{$summary-title$} \\
+
+\spaceM
+\summary{$summary$} \\
 
 %	EXPERIENCE ---------------------------
-\ifNotEmpty{$education$}
-  \sectionTitle{$work-title$}
+\ifNotEmpty{$work$}
+  \spaceXL
+  \sectionTitle{$work-title$} \\
 
+  \spaceM
   $for(work)$
     \begin{absolutelynopagebreak}
       \contentTitle{$work.title$} - \contentPostTitle{$work.company$}\\
       \contentSubTitle{$work.dates$, $work.location$}\\
-
-      \vspace{-8pt}
       \ifNotEmpty{$work.description$}
-        {\raggedright 
-          \content{$work.description$} \\
-        }
+        \spaceS
+        \content{$work.description$} \\
       \fi
       \ifNotEmpty{$work.duties$}
         \begin{myitemize}
@@ -220,41 +213,43 @@
       \fi
 
       \ifNotEmpty{$work.skills$}
-        \vspace{6pt}
+        \spaceS
         $for(work.skills)$
           \tag{$work.skills$}
         $endfor$
       \fi
 
-      \spaceXL
     \end{absolutelynopagebreak}
+    $sep$\spaceL
   $endfor$
 \fi
 
 %	EDUCATION ---------------------------
 \ifNotEmpty{$education$}
-  \sectionTitle{$education-title$}
+  \spaceXL
+  \sectionTitle{$education-title$} \\
 
+  \spaceM
   $for(education)$
     \begin{absolutelynopagebreak}
       \contentTitle{$education.degree$} \\
-      \contentSubTitle{$education.year$, $education.school$, $education.location$}
-
-      \spaceM
+      \contentSubTitle{$education.year$, $education.school$, $education.location$} \\
     \end{absolutelynopagebreak}
+    $sep$\spaceS
   $endfor$
 \fi
 
 %	PROJECTS ---------------------------
 \ifNotEmpty{$projects$}
-  \sectionTitle{$projects-title$}
+  \spaceXL
+  \sectionTitle{$projects-title$} \\
 
+  \spaceM
   $for(projects)$
     \begin{absolutelynopagebreak}
       \contentTitle{$projects.name$} - \content{$projects.description$}\\
-
-      \vspace{-8pt}
     \end{absolutelynopagebreak}
+    $sep$\spaceS
   $endfor$
 \fi
 
